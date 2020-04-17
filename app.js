@@ -32,20 +32,32 @@ app.listen(app.get('port'), () => {
     console.log('server running port is ', app.get('port'))
 });
 
-// app.get('/spices',(req,res)=>{
-//     mysqlConnection.query('SELECT * FROM spices', (err, rows, fields)=>{
-//         if(!err)
-//         res.send(rows);
-//         else
-//         console.log(err);
-//     })
-// });
-
-// app.get('/spices/:id',(req,res)=>{
-//     mysqlConnection.query('SELECT * FROM spices WHERE idspices = ?',(req.params.id), (err, rows, fields)=>{
-//         if(!err)
-//         res.send(rows);
-//         else
-//         console.log(err);
-//     })
-// });
+/**
+//get all spices information
+app.get('/spices',(req,res)=>{
+    mysqlConnection.query('SELECT * FROM list', (err, rows, fields)=>{
+        if(!err)
+        res.send(rows);
+        else
+        console.log(err);
+    })
+});
+//dispalu only description and name columns
+app.get('/list',(req,res)=>{
+    mysqlConnection.query('SELECT Description, Name FROM list', (err, rows, fields)=>{
+        if(!err)
+        res.send(rows);
+        else
+        console.log(err);
+    })
+});
+//search by id
+app.get('/spices/:id',(req,res)=>{
+    mysqlConnection.query('SELECT * FROM list WHERE id = ?',(req.params.id), (err, rows, fields)=>{
+        if(!err)
+        res.send(rows);
+        else
+        console.log(err);
+    })
+});
+*/
