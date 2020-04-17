@@ -5,6 +5,8 @@ const bodyparser = require('body-parser');
 var app = express();
 app.use(bodyparser.json());
 
+app.set('port', (process.env.PORT || 3000))
+
 // var mysqlConnection = mysql.createConnection({
 //     host : 'localhost',
 //     user : 'root',
@@ -22,11 +24,13 @@ app.use(bodyparser.json());
 //     }
 // });
 
-app.get('/home',(req,res)=>{
+app.get('/', (req, res) => {
     res.send("Connected")
 });
 
-app.listen(3000,()=>console.log('server running port is 3000'));
+app.listen(app.get('port'), () => {
+    console.log('server running port is ', app.get('port'))
+});
 
 // app.get('/spices',(req,res)=>{
 //     mysqlConnection.query('SELECT * FROM spices', (err, rows, fields)=>{
