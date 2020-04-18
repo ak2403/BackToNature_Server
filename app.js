@@ -7,22 +7,22 @@ app.use(bodyparser.json());
 
 app.set('port', (process.env.PORT || 3000))
 
-// var mysqlConnection = mysql.createConnection({
-//     host : 'localhost',
-//     user : 'root',
-//     password : '123456',
-//     database : 'testdb',
-//     port : '3306'
-// });
+var mysqlConnection = mysql.createConnection({
+    host: process.env.HOST_NAME,
+    user: 'root',
+    password: process.env.HOST_PASS,
+    database: process.env.HOST_DB,
+    port: '3306'
+});
 
-// mysqlConnection.connect((error)=>{
-//     if(!error){
-//         console.log('succeed');
-//     }
-//     else{
-//         return console.error('error' + error.message);
-//     }
-// });
+mysqlConnection.connect((error) => {
+    if (!error) {
+        console.log('succeed');
+    }
+    else {
+        return console.error('error' + error.message);
+    }
+});
 
 app.get('/', (req, res) => {
     res.send("Connected")
@@ -32,32 +32,31 @@ app.listen(app.get('port'), () => {
     console.log('server running port is ', app.get('port'))
 });
 
-/**
+
 //get all spices information
-app.get('/spices',(req,res)=>{
-    mysqlConnection.query('SELECT * FROM list', (err, rows, fields)=>{
-        if(!err)
-        res.send(rows);
+app.get('/spices', (req, res) => {
+    mysqlConnection.query('SELECT * FROM species', (err, rows, fields) => {
+        if (!err)
+            res.send(rows);
         else
-        console.log(err);
+            console.log(err);
     })
 });
 //dispalu only description and name columns
-app.get('/list',(req,res)=>{
-    mysqlConnection.query('SELECT Description, Name FROM list', (err, rows, fields)=>{
-        if(!err)
-        res.send(rows);
+app.get('/list', (req, res) => {
+    mysqlConnection.query('SELECT `Threatened status`, `Common Name` FROM species', (err, rows, fields) => {
+        if (!err)
+            res.send(rows);
         else
-        console.log(err);
+            console.log(err);
     })
 });
 //search by id
-app.get('/spices/:id',(req,res)=>{
-    mysqlConnection.query('SELECT * FROM list WHERE id = ?',(req.params.id), (err, rows, fields)=>{
-        if(!err)
-        res.send(rows);
+app.get('/spices/:id', (req, res) => {
+    mysqlConnection.query('SELECT * FROM species WHERE id = ?', (req.params.id), (err, rows, fields) => {
+        if (!err)
+            res.send(rows);
         else
-        console.log(err);
+            console.log(err);
     })
 });
-*/
