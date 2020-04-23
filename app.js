@@ -8,10 +8,10 @@ app.use(bodyparser.json());
 app.set('port', (process.env.PORT || 3000))
 
 var mysqlConnection = mysql.createConnection({
-    host: process.env.HOST_NAME,
+    host: process.env.HOST_NAME || "35.184.92.144",
     user: 'root',
-    password: process.env.HOST_PASS,
-    database: process.env.HOST_DB,
+    password: process.env.HOST_PASS || "thats11310104007",
+    database: process.env.HOST_DB || "btnspecies",
     port: '3306'
 });
 
