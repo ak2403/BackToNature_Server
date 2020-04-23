@@ -15,6 +15,14 @@ var mysqlConnection = mysql.createConnection({
     port: '3306'
 });
 
+var mysqlPool = mysql.createPool({
+    host: "35.184.92.144",
+    user: 'root',
+    password: "thats11310104007",
+    database: "btnspecies",
+    port: '3306'
+});
+
 mysqlConnection.connect((error) => {
     if (!error) {
         console.log('succeed');
@@ -35,12 +43,23 @@ app.listen(app.get('port'), () => {
 
 //get all spices information
 app.get('/spices', (req, res) => {
-    mysqlConnection.query('SELECT * FROM species', (err, rows, fields) => {
-        if (!err)
-            res.send(rows);
-        else
+    mysqlPool.getConnection(function (err, connection) {
+        if (err) {
             console.log(err);
-    })
+            //   callback(true); 
+            return;
+        }
+        var sql = "SELECT * FROM species";
+        connection.query(sql, [], function (err, results) {
+            connection.release(); // always put connection back in pool after last query
+            if (err) {
+                console.log(err);
+                callback(true);
+                return;
+            }
+            res.send(results)
+        });
+    });
 });
 //dispalu only description and name columns
 app.get('/list', (req, res) => {
